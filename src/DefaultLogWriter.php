@@ -3,25 +3,33 @@
 namespace Spatie\HttpLogger;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class DefaultLogWriter implements LogWriter
 {
-    public function logRequest(Request $request)
+    public function logRequest(Request $request, Response $response)
     {
         $method = strtoupper($request->getMethod());
 
-        $uri = $request->getPathInfo();
+        // $uri = $request->getPathInfo();
+        $uri = $request->fullUrl();
 
-        $bodyAsJson = json_encode($request->except(config('http-logger.except')));
+        //Added
+        $ipAddress = $request->ip();
+        $responseStatus = $response->status();
 
-        $files = array_map(function (UploadedFile $file) {
-            return $file->getClientOriginalName();
-        }, iterator_to_array($request->files));
+        // $bodyAsJson = json_encode($request->except(config('http-logger.except')));
 
-        $message = "{$method} {$uri} - Body: {$bodyAsJson} - Files: ".implode(', ', $files);
+        // $files = array_map(function (UploadedFile $file) {
+        //     return $file->getClientOriginalName();
+        // }, iterator_to_array($request->files));
 
-        Log::info($message);
+        // $message = "{$method} {$uri} - Body: {$bodyAsJson} - Files: ".implode(', ', $files);
+        $message = "|{$ipAddress}|{$method}|{$uri}|{$responseStatus}";
+
+        // Log::info($message);
+        Log::channel('mediagets')->info($message);
     }
 }

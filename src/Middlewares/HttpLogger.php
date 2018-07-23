@@ -21,7 +21,7 @@ class HttpLogger
     public function handle(Request $request, Closure $next)
     {
         if ($this->logProfile->shouldLogRequest($request)) {
-            $this->logWriter->logRequest($request);
+            $this->logWriter->logRequest($request, $next($request));
         }
 
         return $next($request);

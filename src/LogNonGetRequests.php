@@ -8,6 +8,7 @@ class LogNonGetRequests implements LogProfile
 {
     public function shouldLogRequest(Request $request): bool
     {
-        return in_array(strtolower($request->method()), ['post', 'put', 'patch', 'delete']);
+        return in_array(strtolower($request->method()), ['get']);
+        // return in_array(strtolower($request->method()), ['post', 'put', 'patch', 'delete']);
     }
 }
