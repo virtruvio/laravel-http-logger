@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\HttpLogger\Middlewares;
+namespace Spatie\HttpLogger\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
