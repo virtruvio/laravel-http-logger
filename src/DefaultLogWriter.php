@@ -29,7 +29,7 @@ class DefaultLogWriter implements LogWriter
         // }, iterator_to_array($request->files));
 
         // $message = "{$method} {$uri} - Body: {$bodyAsJson} - Files: ".implode(', ', $files);
-        $message = "|{$ipAddress}|{$method}|{$agent}|{$uri}|{$referer}|{$responseStatus}";
+        $message = "|{$ipAddress}|{$agent}|{$method}|{$uri}|{$referer}|{$responseStatus}";
 
         // Log::info($message);
         Log::channel('mediagets')->info($message);
