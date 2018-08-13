@@ -19,6 +19,7 @@ class DefaultLogWriter implements LogWriter
         //Added
         $ipAddress = $request->ip();
         $referer = $request->header('referer', '');
+        $agent = $request->header('User-Agent');
         $responseStatus = $response->status();
 
         // $bodyAsJson = json_encode($request->except(config('http-logger.except')));
@@ -28,7 +29,7 @@ class DefaultLogWriter implements LogWriter
         // }, iterator_to_array($request->files));
 
         // $message = "{$method} {$uri} - Body: {$bodyAsJson} - Files: ".implode(', ', $files);
-        $message = "|{$ipAddress}|{$method}|{$uri}|{$referer}|{$responseStatus}";
+        $message = "|{$ipAddress}|{$method}|{$agent}|{$uri}|{$referer}|{$responseStatus}";
 
         // Log::info($message);
         Log::channel('mediagets')->info($message);
